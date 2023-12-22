@@ -19,17 +19,19 @@ DEFAULT_COLOR_SURRENDER = "#ff41ff"  # purple
 
 def main(config):
     state = config.str("state", DEFAULT_STATE)
-    message = "{}!".format(state)
-    return render.Root(
-        child = render.Text(message, color = get_color(state)),
-    )
+    # message = "{}!".format(state)
 
     # Get the dealer's hand to play against
     dealer_card = random.number(1, 13)
+    dealer_text = "{} OF {}".format(get_card(dealer_card), get_suit())
 
     # Get the player's cards
-    player_card_one = random.number(1, 13)
-    player_card_two = random.number(1, 13)
+    # player_card_one = random.number(1, 13)
+    # player_card_two = random.number(1, 13)
+
+    return render.Root(
+        child = render.Text(dealer_text, color = get_color(state)),
+    )
 
 def get_color(state):
     if (state == "Hit"):
@@ -74,6 +76,18 @@ def get_card(value):
         return "KING"
     else:
         return "ERROR"
+
+def get_suit():
+    suit = random.number(0, 3)
+
+    if (0 == suit):
+        return "♣"
+    if (1 == suit):
+        return "♦"
+    if (2 == suit):
+        return "♥"
+    else:
+        return "♠"
 
 def get_schema():
     return schema.Schema(
